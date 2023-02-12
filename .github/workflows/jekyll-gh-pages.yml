@@ -48,14 +48,13 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-
-      - name: Notify slack
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: pullreminders/slack-action@master
+           SLACK_WEBHOOK: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
-           args: '{\"channel\":\"C04L5SXJ3RP\",\"text\":\"The file \`${{github.event.head_commit.message}}\` was pushed to the repository.\"}'
-           headers: |
-              Content-Type: application/json; charset=UTF-8
-              Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}
+            args: The file `${{ github.event.head_commit.added[0] }}` was added in the commit.
+
 
