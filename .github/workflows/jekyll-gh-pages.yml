@@ -36,6 +36,12 @@ jobs:
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
+      - name: Notify slack
+        env:
+         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: pullreminders/slack-action@master
+        with:
+            args: '{\"channel\":\"C04L5SXJ3RP\",\"text\":\"The file \`${{github.event.head_commit.message}}\` was pushed to the repository.\"}'
 
   # Deployment job
   deploy:
@@ -48,9 +54,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-      - name: Notify slack
-        env:
-         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: pullreminders/slack-action@master
-        with:
-            args: '{\"channel\":\"C04L5SXJ3RP\",\"text\":\"The file \`${{github.event.head_commit.message}}\` was pushed to the repository.\"}'
