@@ -55,6 +55,9 @@ jobs:
         env:
            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
            SLACK_MESSAGE: 'https://hasankfz.github.io/mobile-app-reports.github.io/${{github.event.head_commit.added[0]}}'
+        with:
+            message: The file <https://hasankfz.github.io/mobile-app-reports.github.io/${{github.event.head_commit.added[0]}}|${{ github.event.head_commit.added[0] }}> was added in the commit.
+
 
  
 
