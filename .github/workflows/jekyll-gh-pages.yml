@@ -53,7 +53,7 @@ jobs:
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
-           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         with:
             args: The file `${{ github.event.head_commit.added[0] }}` was added in the commit.
 
