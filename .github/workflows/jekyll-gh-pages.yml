@@ -48,15 +48,13 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
+      - name: Slack Notify
         env:
-           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-           SLACK_MESSAGE: 'https://hasankfz.github.io/mobile-app-reports.github.io/${{github.event.head_commit.added[0]}}'
-        with:
-            message: The file <https://hasankfz.github.io/mobile-app-reports.github.io/${{github.event.head_commit.added[0]}}|${{ github.event.head_commit.added[0] }}> was added in the commit.
+             SLACK_BOT_TOKEN: $({secrests.SLACK_BOT_TOKEN}}
+        uses: pullreminders/slack-action@master
+        with: 
+            args: '{\"channel\":\"C04LH0JCLQ0\",\"text":\"hello world\"}'
+
 
 
  
