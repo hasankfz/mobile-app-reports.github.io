@@ -52,7 +52,10 @@ jobs:
       - name: Get File Name
         run: |
             FILE_NAME=$(jq -r .head_commit.modified[0] $GITHUB_EVENT_PATH)
-
+      - name: Echo File Name
+        run: echo "File Name:$FILE_NAME"
+      - name: Print Event Payload
+        run: cat $GITHUB_EVENT_PATH
       - name: Post to a Slack channel
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
