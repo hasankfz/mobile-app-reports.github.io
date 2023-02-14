@@ -33,7 +33,7 @@ jobs:
         run: echo "Latest commit file:" $(git show --name-only HEAD | tail -n 1)
         id: latest_commit
       - name: Set latest commit name environment variable
-        run: echo "Committed files:" $(git show --pretty="" --name-only <sha>)
+        run: echo "Committed files:" $(git show --pretty="" --name-only github.sha)
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
