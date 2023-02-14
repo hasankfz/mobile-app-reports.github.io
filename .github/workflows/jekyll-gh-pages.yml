@@ -53,6 +53,7 @@ jobs:
             # Number of commits to fetch. 0 indicates all history for all branches and tags.
             # Default: 1
             fetch-depth: 2
+            run: git ls-tree --name-only -r <commit-ish>
 
       - name: Print Event Payload
         run: cat $GITHUB_EVENT_PATH
