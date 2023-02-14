@@ -49,16 +49,8 @@ jobs:
         uses: actions/deploy-pages@v1
       - name: Install jq
         run: sudo apt-get install jq -y
-      - name: Get File Name
-        run: |
-            FILE_NAME=$(jq -r .head_commit.modified[0] $GITHUB_EVENT_PATH)
-      - name: get changed files
-        id: getfile
-        run: |
-          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
-          - name: echo output
-            run: |
-                echo ${{ steps.getfile.outputs.files }}
+             git diff-tree --no-commit-id --name-only bd61ad98 -r
+
       - name: Print Event Payload
         run: cat $GITHUB_EVENT_PATH
       - name: Post to a Slack channel
