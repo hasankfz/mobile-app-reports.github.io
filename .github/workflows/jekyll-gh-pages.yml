@@ -53,7 +53,7 @@ jobs:
         run: |
             FILE_NAME=$(jq -r .head_commit.modified[0] $GITHUB_EVENT_PATH)
       - name: Echo File Name
-        run: echo "File Name:$FILE_NAME"
+        run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
       - name: Print Event Payload
         run: cat $GITHUB_EVENT_PATH
       - name: Post to a Slack channel
