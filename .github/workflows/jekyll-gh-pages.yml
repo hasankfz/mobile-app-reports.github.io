@@ -34,8 +34,13 @@ jobs:
         id: latest_commit
       - name: Set latest commit name environment variable
         run: echo "Committed files:" $(git show --pretty="" --name-only ${{ github.sha }})
-      - name: double check
-        run: echo "Committed files:" $(git diff-tree --no-commit-id --name-only -r HEAD)
+      - name: get changed files
+        id: getfile
+        run: |
+          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
+      - name: echo output
+        run: |
+          echo ${{ steps.getfile.outputs.files }}
 
 
       - name: Setup Pages
@@ -60,13 +65,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-
-      - uses: actions/checkout@v2
-        with:
-            # Number of commits to fetch. 0 indicates all history for all branches and tags.
-            # Default: 1
-            fetch-depth: 2
-            
 
       - name: Print Event Payload
         run: cat $GITHUB_EVENT_PATH
