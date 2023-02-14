@@ -5,8 +5,7 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-env:
-  GITHUB_EVENT_PATH: ${{ github.event_path }}
+
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -35,6 +34,8 @@ jobs:
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
+      - name: check file
+        run: git show --name-only <sha>
         
   # Deployment job
   deploy:
