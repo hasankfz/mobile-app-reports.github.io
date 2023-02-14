@@ -35,7 +35,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
       - name: check file
-        run: git show --name-only HEAD
+        run: git diff-tree --no-commit-id --name-only -r HEAD
         
   # Deployment job
   deploy:
