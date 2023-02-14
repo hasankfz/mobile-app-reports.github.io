@@ -29,6 +29,11 @@ jobs:
         run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
       - name: check
         run: git log --pretty=format:"%h %s" ${{ github.sha }}
+      - name: Get latest commit name
+        run: echo "Latest commit:" $(git log -1 --pretty=%B)
+        id: latest_commit
+      - name: Set latest commit name environment variable
+        run: echo "::set-env name=LATEST_COMMIT::${{ steps.latest_commit.output }}"
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Build with Jekyll
