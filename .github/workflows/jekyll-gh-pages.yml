@@ -28,7 +28,7 @@ jobs:
       - name: check file
         run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
       - name: check
-        run: git log --pretty=format:"%h %s" HEAD
+        run: git log --pretty=format:"%h %s" ${{ github.sha }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Build with Jekyll
