@@ -34,6 +34,11 @@ jobs:
         id: latest_commit
       - name: Set latest commit name environment variable
         run: echo "Committed files:" $(git show --pretty="" --name-only ${{ github.sha }})
+      # Checkout the source code
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+        with:
+           fetch-depth: 0
       - name: get changed files
         id: getfile
         run: |
