@@ -34,6 +34,9 @@ jobs:
         id: latest_commit
       - name: Set latest commit name environment variable
         run: echo "Committed files:" $(git show --pretty="" --name-only ${{ github.sha }})
+      - name: double check
+        run: echo "Committed files:" $(git diff-tree --no-commit-id --name-only -r HEAD)
+
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
