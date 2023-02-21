@@ -33,7 +33,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build-${{ github.run_id }} # Use the same job ID in the needs field
+    needs: build # Use the same job ID in the needs field
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
