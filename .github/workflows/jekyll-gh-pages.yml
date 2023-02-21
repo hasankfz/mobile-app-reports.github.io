@@ -10,8 +10,9 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: ${{ github.job }}-${{ github.ref }} 
   cancel-in-progress: true
+
 
 jobs:
   build:
