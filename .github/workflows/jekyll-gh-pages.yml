@@ -1,5 +1,5 @@
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy_Github_Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -22,6 +22,9 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    concurrency:
+      group: my_workflow
+      cancel-in-progress: true
     steps:
       - name: Checkout
         uses: actions/checkout@v3
