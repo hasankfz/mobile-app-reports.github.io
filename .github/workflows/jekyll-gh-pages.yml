@@ -23,7 +23,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     concurrency:
-      group: my_workflow
+      group: ${{ format('{0}-{1}', github.workflow, github.job) }}
       cancel-in-progress: true
     steps:
       - name: Checkout
