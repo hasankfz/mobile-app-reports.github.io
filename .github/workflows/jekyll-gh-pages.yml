@@ -57,6 +57,7 @@ jobs:
            with:
                channel-id: 'C04LH0JCLQ0'
                slack-message: $MESSAGE
+           done
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
