@@ -37,6 +37,13 @@ jobs:
         run: echo "Committed files:" $(git log -n 1 --name-only --pretty=oneline | tail -n 1)
       - name: yoo 
         run: echo "Committed files:" $(git diff --name-only HEAD)
+      - name: Get modified files
+        run: |
+           files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep "^mobile-bucket-report/")
+           if [[ -n $files ]]; then
+           echo "::set-output name=new_file::$(echo "$files" | head -n 1)"
+           fi
+        id: modified_files
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
@@ -46,37 +53,37 @@ jobs:
         uses: actions/upload-pages-artifact@v1
 
         
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
-      # Checkout the source code
-      - name: 'Checkout source code'
-        uses: actions/checkout@v2
-        with:
-           fetch-depth: 0
-      - name: get changed files
-        id: getfile
-        run: |
-          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
-      - name: echo output
-        run: |
-          echo ${{ steps.getfile.outputs.files }}
-      - name: Post to a Slack channel
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          channel-id: 'C04LH0JCLQ0'
-          slack-message: "A file named '$FILE_NAME' was committed or pushed to the repository.\nMobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/${{steps.getfile.outputs.files}}" 
-        env:
-           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+#   # Deployment job
+#   deploy:
+#     environment:
+#       name: github-pages
+#       url: ${{ steps.deployment.outputs.page_url }}
+#     runs-on: ubuntu-latest
+#     needs: build
+#     steps:
+#       - name: Deploy to GitHub Pages
+#         id: deployment
+#         uses: actions/deploy-pages@v1
+#       # Checkout the source code
+#       - name: 'Checkout source code'
+#         uses: actions/checkout@v2
+#         with:
+#            fetch-depth: 0
+#       - name: get changed files
+#         id: getfile
+#         run: |
+#           echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
+#       - name: echo output
+#         run: |
+#           echo ${{ steps.getfile.outputs.files }}
+#       - name: Post to a Slack channel
+#         id: slack
+#         uses: slackapi/slack-github-action@v1.23.0
+#         with:
+#           channel-id: 'C04LH0JCLQ0'
+#           slack-message: "A file named '$FILE_NAME' was committed or pushed to the repository.\nMobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/${{steps.getfile.outputs.files}}" 
+#         env:
+#            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
  
 
