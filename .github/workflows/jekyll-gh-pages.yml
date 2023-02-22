@@ -35,7 +35,8 @@ jobs:
         uses: actions/configure-pages@v3
       - name: check
         run: echo "Committed files:" $(git log -n 1 --name-only --pretty=oneline | tail -n +2)
-             echo "Committed files:" $(git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD) | sed -e 's#^\#deleted#' -e 's#^##')
+      - name: yoo 
+        run: echo "Committed files:" $(git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD))
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
