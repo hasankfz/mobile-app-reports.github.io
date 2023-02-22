@@ -34,8 +34,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: check
-        run: echo "Committed files:" $(git show --stat --name-only ${{ github.sha }})
-             $(git show --stat --oneline HEAD)
+        run: echo "Committed files:" git log -n 1 --name-only --pretty=oneline | tail -n +2
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
