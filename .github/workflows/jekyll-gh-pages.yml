@@ -34,7 +34,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: check
-        run: echo "Committed files:" $(git ls-tree --name-only -r ${{ github.sha }})
+        run: echo "Committed files:" $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
         
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
