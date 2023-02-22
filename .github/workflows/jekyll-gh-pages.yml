@@ -39,11 +39,12 @@ jobs:
         run: echo "Committed files:" $(git diff --name-only HEAD)
       - name: Get modified files
         run: |
-           files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep "^mobile-bucket-report/")
-           if [[ -n $files ]]; then
-           echo "::set-output name=new_file::$(echo "$files" | head -n 1)"
-           fi
+          files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep "^mobile-report-bucket/")
+          if [[ -n $files ]]; then
+          echo "::set-output name=new_file::$(echo "$files" | head -n 1)"
+          fi
         id: modified_files
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
