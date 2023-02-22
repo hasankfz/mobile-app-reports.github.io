@@ -48,15 +48,15 @@ jobs:
         if: steps.getfile.outputs.files != ''
         env:
            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-           run: |
-               for file in ${{ steps.getfile.outputs.files }}; do
-               FILE_NAME=$(basename "$file")
-               MESSAGE="A file named '$FILE_NAME' was committed or pushed to the repository.\nMobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$FILE_NAME"
-               echo "Sending message: $MESSAGE"
-               slackapi/slack-github-action@v1.23.0:
-               with:
-                   channel-id: 'C04LH0JCLQ0'
-                   slack-message: $MESSAGE
+        run: |
+           for file in ${{ steps.getfile.outputs.files }}; do
+           FILE_NAME=$(basename "$file")
+           MESSAGE="A file named '$FILE_NAME' was committed or pushed to the repository.\nMobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$FILE_NAME"
+           echo "Sending message: $MESSAGE"
+           slackapi/slack-github-action@v1.23.0:
+           with:
+               channel-id: 'C04LH0JCLQ0'
+               slack-message: $MESSAGE
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
