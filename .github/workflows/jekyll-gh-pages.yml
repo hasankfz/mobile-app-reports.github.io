@@ -124,7 +124,6 @@ jobs:
         id: merge_notification
         run: |
             MESSAGES=()
-            count=""
             for file in ${{ steps.getfile.outputs.files }}; do
               if [[ $file == mobile* ]]; then
                 FILE_NAME=$(basename "$file")
@@ -136,7 +135,6 @@ jobs:
               fi
             done
             echo "::set-output name=merged-messages::${MESSAGES[@]}"
-            echo "::set-output name=added-files::$count"
 
       - name: display notification
         if: steps.merge_notification.outputs.merged-messages != ''
@@ -146,7 +144,7 @@ jobs:
 
 
       - name: Slack Notify
-        if: steps.check-files.outputs.added-files != 'no' # steps.getfile.outputs.files != ''
+        if: steps.merge_notification.outputs.merged-messages != ''
         uses: slackapi/slack-github-action@v1.23.0
         
         env:
