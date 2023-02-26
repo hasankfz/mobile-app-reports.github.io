@@ -136,7 +136,7 @@ jobs:
         if: steps.merge_notification.outputs.merged-messages != ''
         run: |
           MESSAGES="${{ join(steps.merge_notification.outputs.merged-messages, '\n') }}"
-          echo ${{ steps.merge_notification.outputs.merged-messages }}
+          echo ${{ steps.merge_notification.outputs.merged-messages - e}}
 
 
       - name: Slack Notify
@@ -149,7 +149,7 @@ jobs:
 
         with:
            channel-id: 'C04LH0JCLQ0'
-           slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
+           slack-message: ${{ steps.merge_notification.outputs.merged-messages}} "%s\n"
 
  
 
