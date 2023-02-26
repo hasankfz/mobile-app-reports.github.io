@@ -131,6 +131,11 @@ jobs:
               MESSAGES+=("$MESSAGE"$\n)
              done
             echo "::set-output name=merged-messages::${MESSAGES[@]}"
+            file_check=$(git diff --name-only --diff-filter=A --relative)
+            if echo "$file_check" | grep -q "^mobile-report-bucket/"; then
+                echo "Files added to mobile-report-bucket folder"
+                echo "::set-output name=added_files::yes"
+            fi
 
       - name: display notification
         if: steps.merge_notification.outputs.merged-messages != ''
@@ -140,7 +145,7 @@ jobs:
 
 
       - name: Slack Notify
-        if: ${{git diff --name-only --diff-filter=A --relative | grep -q "^mobile-report-bucket/"}} #steps.getfile.outputs.files != ''
+        if: steps.check-files.outputs.added_files == 'yes' # steps.getfile.outputs.files != ''
         uses: slackapi/slack-github-action@v1.23.0
         
         env:
