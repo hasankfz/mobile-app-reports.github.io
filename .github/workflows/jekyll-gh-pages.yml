@@ -104,14 +104,48 @@ jobs:
       - name: echo output
         run: |
           echo ${{ steps.getfile.outputs.files }}
-      - name: Post to a Slack channel
-        id: slack
+#       - name: Post to a Slack channel
+#         id: slack
+#         uses: slackapi/slack-github-action@v1.23.0
+#         with:
+#           channel-id: 'C04LH0JCLQ0'
+#           slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
+#         env:
+#            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+#       - name: get changed files
+#         id: getfile
+#         run: |
+#           echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r HEAD | xargs)"
+#       - name: echo output
+#         run: |
+#           echo ${{ steps.getfile.outputs.files }}
+      - name: merge notification
+        if: steps.getfile.outputs.files != ''
+        id: merge_notification
+        run: |
+            MESSAGES=""
+            for file in ${{ steps.getfile.outputs.files }}; do
+              FILE_NAME=$(basename "$file")
+              MESSAGE="A file named '$FILE_NAME' was committed or pushed to the repository.\n Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/mobile-report-bucket/$FILE_NAME"
+              echo "Sending message: $MESSAGE"
+              MESSAGES="${MESSAGES}${MESSAGE} "
+             done
+            echo "::set-output name=merged-messages::${MESSAGES}"
+
+      - name: display notification
+        if: steps.merge_notification.outputs.merged-messages != ''
+        run: |
+          echo "${{ steps.merge_notification.outputs.merged-messages }}"
+
+
+      - name: Slack Notify
+        if: steps.getfile.outputs.files != ''
         uses: slackapi/slack-github-action@v1.23.0
-        with:
-          channel-id: 'C04LH0JCLQ0'
-          slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
         env:
            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+           channel-id: 'C04LH0JCLQ0'
+           slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
 
  
 
