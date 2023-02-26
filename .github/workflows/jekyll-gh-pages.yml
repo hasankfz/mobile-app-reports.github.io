@@ -132,6 +132,7 @@ jobs:
              done
             echo "::set-output name=merged-messages::${MESSAGES[@]}"
             file_check=$(git diff --name-only --diff-filter=A --relative)
+            echo "$file_check"
             if echo "$file_check" | grep -q "^mobile-report-bucket/"; then
                 echo "Files added to mobile-report-bucket folder"
                 echo "::set-output name=added_files::yes"
