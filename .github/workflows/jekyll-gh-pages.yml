@@ -126,7 +126,7 @@ jobs:
             MESSAGES=""
             for file in ${{ steps.getfile.outputs.files }}; do
               FILE_NAME=$(basename "$file")
-              MESSAGE="A file named '$FILE_NAME' was committed or pushed to the repository.\n Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$file"
+              MESSAGE="Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$file"
               echo "Sending message: $MESSAGE"
               MESSAGES="${MESSAGES}${MESSAGE}"$'\n'
              done
