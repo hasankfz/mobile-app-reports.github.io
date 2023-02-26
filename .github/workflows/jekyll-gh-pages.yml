@@ -146,7 +146,7 @@ jobs:
 
 
       - name: Slack Notify
-        if: steps.check-files.outputs.added_files != 'no' # steps.getfile.outputs.files != ''
+        if: steps.check-files.outputs.added-files != 'no' # steps.getfile.outputs.files != ''
         uses: slackapi/slack-github-action@v1.23.0
         
         env:
