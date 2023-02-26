@@ -145,7 +145,7 @@ jobs:
         
         env:
            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-           #MESSAGES: ${{ steps.merge_notification.outputs.merged-messages }}
+           MESSAGES: ${{ steps.merge_notification.outputs.MESSAGES }}
 
         with:
            channel-id: 'C04LH0JCLQ0'
