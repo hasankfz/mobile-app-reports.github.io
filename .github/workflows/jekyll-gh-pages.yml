@@ -139,17 +139,17 @@ jobs:
           echo ${{ steps.merge_notification.outputs.merged-messages }}
 
 
-      # - name: Slack Notify
-      #   if: steps.getfile.outputs.files != ''
-      #   uses: slackapi/slack-github-action@v1.23.0
+      - name: Slack Notify
+        if: steps.getfile.outputs.files != ''
+        uses: slackapi/slack-github-action@v1.23.0
         
-      #   env:
-      #      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      #      MESSAGES: ${{ steps.merge_notification.outputs.merged-messages }}
+        env:
+           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+           MESSAGES: ${{ steps.merge_notification.outputs.merged-messages }}
 
-      #   with:
-      #      channel-id: 'C04LH0JCLQ0'
-      #      slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
+        with:
+           channel-id: 'C04LH0JCLQ0'
+           slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
 
  
 
