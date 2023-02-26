@@ -127,9 +127,9 @@ jobs:
             for file in ${{ steps.getfile.outputs.files }}; do
               if [[ $file == mobile* ]]; then
                 FILE_NAME=$(basename "$file")
-                MESSAGE="Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$file"
+                MESSAGE="Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$file \n"
                 echo "Sending message: $MESSAGE"
-                MESSAGES+=("$MESSAGE \n")
+                MESSAGES+=("$MESSAGE")
               else
                 count=no
               fi
