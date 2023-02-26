@@ -135,20 +135,20 @@ jobs:
       - name: display notification
         if: steps.merge_notification.outputs.merged-messages != ''
         run: |
-          echo "${{ steps.merge_notification.outputs.merged-messages }}"
+          echo "${{ join(steps.merge_notification.outputs.merged-messages, '\n') }}"
 
 
-      - name: Slack Notify
-        if: steps.getfile.outputs.files != ''
-        uses: slackapi/slack-github-action@v1.23.0
+      # - name: Slack Notify
+      #   if: steps.getfile.outputs.files != ''
+      #   uses: slackapi/slack-github-action@v1.23.0
         
-        env:
-           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-           MESSAGES: ${{ steps.merge_notification.outputs.merged-messages }}
+      #   env:
+      #      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      #      MESSAGES: ${{ steps.merge_notification.outputs.merged-messages }}
 
-        with:
-           channel-id: 'C04LH0JCLQ0'
-           slack-message: ${{ join(steps.merge_notification.outputs.merged-messages, '\n') }}
+      #   with:
+      #      channel-id: 'C04LH0JCLQ0'
+      #      slack-message: ${{ join(steps.merge_notification.outputs.merged-messages, '\n') }}
 
  
 
