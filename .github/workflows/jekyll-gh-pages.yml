@@ -63,14 +63,14 @@ jobs:
           echo "${{ steps.merge_notification.outputs.merged-messages }}"
 
 
-      - name: Slack Notify
-        if: steps.getfile.outputs.files != ''
-        uses: slackapi/slack-github-action@v1.23.0
-        env:
-           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        with:
-           channel-id: 'C04LH0JCLQ0'
-           slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
+#       - name: Slack Notify
+#         if: steps.getfile.outputs.files != ''
+#         uses: slackapi/slack-github-action@v1.23.0
+#         env:
+#            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+#         with:
+#            channel-id: 'C04LH0JCLQ0'
+#            slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
@@ -81,37 +81,37 @@ jobs:
         uses: actions/upload-pages-artifact@v1
 
         
-#   # Deployment job
-#   deploy:
-#     environment:
-#       name: github-pages
-#       url: ${{ steps.deployment.outputs.page_url }}
-#     runs-on: ubuntu-latest
-#     needs: build
-#     steps:
-#       - name: Deploy to GitHub Pages
-#         id: deployment
-#         uses: actions/deploy-pages@v1
-#       # Checkout the source code
-#       - name: 'Checkout source code'
-#         uses: actions/checkout@v3
-#         with:
-#            fetch-depth: 0
-#       - name: get changed files
-#         id: getfile
-#         run: |
-#           echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
-#       - name: echo output
-#         run: |
-#           echo ${{ steps.getfile.outputs.files }}
-#       - name: Post to a Slack channel
-#         id: slack
-#         uses: slackapi/slack-github-action@v1.23.0
-#         with:
-#           channel-id: 'C04LH0JCLQ0'
-#           slack-message: "A file named '$FILE_NAME' was committed or pushed to the repository.\nMobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/${{steps.getfile.outputs.files}}" 
-#         env:
-#            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+      # Checkout the source code
+      - name: 'Checkout source code'
+        uses: actions/checkout@v3
+        with:
+           fetch-depth: 0
+      - name: get changed files
+        id: getfile
+        run: |
+          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
+      - name: echo output
+        run: |
+          echo ${{ steps.getfile.outputs.files }}
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: 'C04LH0JCLQ0'
+          slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
+        env:
+           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
  
 
