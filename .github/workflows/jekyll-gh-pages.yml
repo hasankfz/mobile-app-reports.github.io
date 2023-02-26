@@ -121,9 +121,10 @@ jobs:
 #           echo ${{ steps.getfile.outputs.files }}
       - name: merge notification
         if: steps.getfile.outputs.files != ''
+        env:
+            MESSAGES: ""
         id: merge_notification
         run: |
-            MESSAGES=""
             for file in ${{ steps.getfile.outputs.files }}; do
               FILE_NAME=$(basename "$file")
               MESSAGE="Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$file"
@@ -144,7 +145,7 @@ jobs:
         
         env:
            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-           MESSAGES: ${{ steps.merge_notification.outputs.merged-messages }}
+           #MESSAGES: ${{ steps.merge_notification.outputs.merged-messages }}
 
         with:
            channel-id: 'C04LH0JCLQ0'
