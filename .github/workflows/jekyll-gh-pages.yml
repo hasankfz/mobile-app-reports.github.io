@@ -128,7 +128,7 @@ jobs:
               FILE_NAME=$(basename "$file")
               MESSAGE="Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$file"
               echo "Sending message: $MESSAGE"
-              MESSAGES+=("$MESSAGE $'\n'")
+              MESSAGES+=("$MESSAGE'\n'")
              done
             echo "::set-output name=merged-messages::${MESSAGES[@]}"
 
