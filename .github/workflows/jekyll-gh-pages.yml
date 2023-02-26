@@ -132,7 +132,7 @@ jobs:
                 echo "Sending message: $MESSAGE"
                 MESSAGES+=("$MESSAGE")
               else
-                count="no"
+                count=no
               fi
             done
             echo "::set-output name=merged-messages::${MESSAGES[@]}"
