@@ -16,61 +16,61 @@ permissions:
 # Allow one concurrent deployment
 
 jobs:
-  # Build job
+  #Build job
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: check file
-        run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
-      - name: check
-        run: git log --pretty=format:"%h %s" ${{ github.sha }}
-      - name: Get latest commit name
-        run: echo "Latest commit file:" $(git show --name-only HEAD | tail -n 1)
-        id: latest_commit
-      - name: Set latest commit name environment variable
-        run: echo "Committed files:" $(git show --pretty="" --name-only ${{ github.sha }})
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: 'Checkout source code'
-        uses: actions/checkout@v3
-        with:
-           fetch-depth: 0
-      - name: get changed files
-        id: getfile
-        run: |
-          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r HEAD | xargs)"
-      - name: echo output
-        run: |
-          echo ${{ steps.getfile.outputs.files }}
-      - name: merge notification
-        if: steps.getfile.outputs.files != ''
-        id: merge_notification
-        run: |
-            MESSAGES=""
-            for file in ${{ steps.getfile.outputs.files }}; do
-              FILE_NAME=$(basename "$file")
-              MESSAGE="A file named '$FILE_NAME' was committed or pushed to the repository.\n Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/mobile-report-bucket/$FILE_NAME"
-              echo "Sending message: $MESSAGE"
-              MESSAGES="${MESSAGES}${MESSAGE} "
-             done
-            echo "::set-output name=merged-messages::${MESSAGES}"
-
-      - name: display notification
-        if: steps.merge_notification.outputs.merged-messages != ''
-        run: |
-          echo "${{ steps.merge_notification.outputs.merged-messages }}"
-
-
-#       - name: Slack Notify
-#         if: steps.getfile.outputs.files != ''
-#         uses: slackapi/slack-github-action@v1.23.0
-#         env:
-#            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+#       - name: Checkout
+#         uses: actions/checkout@v3
+#       - name: check file
+#         run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
+#       - name: check
+#         run: git log --pretty=format:"%h %s" ${{ github.sha }}
+#       - name: Get latest commit name
+#         run: echo "Latest commit file:" $(git show --name-only HEAD | tail -n 1)
+#         id: latest_commit
+#       - name: Set latest commit name environment variable
+#         run: echo "Committed files:" $(git show --pretty="" --name-only ${{ github.sha }})
+#       - name: Setup Pages
+#         uses: actions/configure-pages@v3
+#       - name: 'Checkout source code'
+#         uses: actions/checkout@v3
 #         with:
-#            channel-id: 'C04LH0JCLQ0'
-#            slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
+#            fetch-depth: 0
+#       - name: get changed files
+#         id: getfile
+#         run: |
+#           echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r HEAD | xargs)"
+#       - name: echo output
+#         run: |
+#           echo ${{ steps.getfile.outputs.files }}
+#       - name: merge notification
+#         if: steps.getfile.outputs.files != ''
+#         id: merge_notification
+#         run: |
+#             MESSAGES=""
+#             for file in ${{ steps.getfile.outputs.files }}; do
+#               FILE_NAME=$(basename "$file")
+#               MESSAGE="A file named '$FILE_NAME' was committed or pushed to the repository.\n Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/mobile-report-bucket/$FILE_NAME"
+#               echo "Sending message: $MESSAGE"
+#               MESSAGES="${MESSAGES}${MESSAGE} "
+#              done
+#             echo "::set-output name=merged-messages::${MESSAGES}"
+
+#       - name: display notification
+#         if: steps.merge_notification.outputs.merged-messages != ''
+#         run: |
+#           echo "${{ steps.merge_notification.outputs.merged-messages }}"
+
+
+# #       - name: Slack Notify
+# #         if: steps.getfile.outputs.files != ''
+# #         uses: slackapi/slack-github-action@v1.23.0
+# #         env:
+# #            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+# #         with:
+# #            channel-id: 'C04LH0JCLQ0'
+# #            slack-message: ${{ steps.merge_notification.outputs.merged-messages }}
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
@@ -136,7 +136,7 @@ jobs:
         if: steps.merge_notification.outputs.merged-messages != ''
         run: |
           MESSAGES="${{ join(steps.merge_notification.outputs.merged-messages, '\n') }}"
-          echo ${{ steps.merge_notification.outputs.merged-messages - e}}
+          echo ${{ steps.merge_notification.outputs.merged-messages}}
 
 
       - name: Slack Notify
