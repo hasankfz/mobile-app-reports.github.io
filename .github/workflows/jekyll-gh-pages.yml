@@ -129,7 +129,7 @@ jobs:
                 FILE_NAME=$(basename "$file")
                 MESSAGE="Mobile Application Report Link: https://hasankfz.github.io/mobile-app-reports.github.io/$file"
                 echo "Sending message: $MESSAGE"
-                MESSAGES+=("$MESSAGE\n\n")
+                MESSAGES+=("$MESSAGE \u000A")
               else
                 count=no
               fi
